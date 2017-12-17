@@ -1,6 +1,7 @@
 package com.gojek.services;
 
 import com.gojek.exceptions.TicketNotIssuedException;
+import com.gojek.exceptions.VehicleNotFoundException;
 import com.gojek.models.Ticket;
 import org.junit.Test;
 

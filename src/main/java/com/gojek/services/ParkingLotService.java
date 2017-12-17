@@ -19,20 +19,15 @@ public class ParkingLotService {
     }
 
     public void parkVehicle(Vehicle vehicle) {
-        try {
-            Ticket ticket = ticketingSystem.issueTicket();
-            parkingLot.put(ticket.getSlot(), vehicle);
-        } catch (TicketNotIssuedException exception) {
-            System.out.println(exception.getMessage());
-        }
+        Ticket ticket = ticketingSystem.issueTicket();
+        parkingLot.put(ticket.getSlot(), vehicle);
     }
 
     public void removeVehicleFromSlot(int slot) {
         if (parkingLot.containsKey(slot)) {
             parkingLot.remove(slot);
             ticketingSystem.markSlotFree(new Ticket(slot));
-        }
-        else {
+        } else {
             throw new VehicleNotFoundException();
         }
     }
