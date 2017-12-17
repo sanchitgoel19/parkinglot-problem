@@ -1,6 +1,5 @@
 package com.gojek.services;
 
-import com.gojek.exceptions.TicketNotIssuedException;
 import com.gojek.exceptions.VehicleNotFoundException;
 import com.gojek.models.Color;
 import com.gojek.models.Ticket;
@@ -63,7 +62,9 @@ public class ParkingLotService {
                 .filter(element -> element.getValue().getLicensePlate().equalsIgnoreCase(registration))
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
-        assert slot.size() == 1;
+        if (slot.size() == 0) {
+            throw new VehicleNotFoundException();
+        }
         return slot.get(0);
     }
 
