@@ -6,22 +6,29 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
-public class TicketIssuingServiceSpecs {
+public class TicketingSystemSpecs {
 
     @Test(expected = TicketNotIssuedException.class)
     public void issueTicketMethodShouldThrowTicketNotIssuedException() {
-        TicketIssuingService ticketIssuingService = new TicketIssuingService(0);
-        Ticket ticket = ticketIssuingService.issueTicket();
+        TicketingSystem ticketingSystem = new TicketingSystem(0);
+        Ticket ticket = ticketingSystem.issueTicket();
     }
 
     @Test
     public void shouldNotThrowException() {
-        TicketIssuingService ticketIssuingService = new TicketIssuingService(5);
-        Ticket ticket = ticketIssuingService.issueTicket();
+        TicketingSystem ticketingSystem = new TicketingSystem(5);
+        Ticket ticket = ticketingSystem.issueTicket();
         Integer slot = ticket.getSlot();
         assertTrue("Should assign a the lowest slot available", slot == 1);
-        Ticket newTicket = ticketIssuingService.issueTicket();
+        Ticket newTicket = ticketingSystem.issueTicket();
         Integer newSlot = newTicket.getSlot();
         assertTrue("Should assign the new lowest slot availble", newSlot == 2);
+    }
+
+    @Test
+    public void shouldFreeTheSlot() {
+        TicketingSystem ticketingSystem = new TicketingSystem(5);
+        Ticket ticket = ticketingSystem.issueTicket();
+        ticketingSystem.markSlotFree(ticket);
     }
 }
